@@ -8,7 +8,7 @@ const path = require('path')
 
 const log = console.log
 
-let dir = './node_modules/material-design-icons/'
+let dir = './../node_modules/material-design-icons/'
 let folders = [
   'action',
   'alert',
