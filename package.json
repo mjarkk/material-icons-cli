@@ -1,7 +1,7 @@
 {
   "name": "material-icons-cli",
   "description": "Download material icons via the terminal",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Mark Kopenga <mkopenga@gmail.com>",
   "main": "index.js",
   "license": "GPL-3.0-or-later",
