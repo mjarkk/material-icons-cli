@@ -1,11 +1,19 @@
 {
   "name": "material-icons-cli",
   "description": "Download material icons via the terminal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Mark Kopenga <mkopenga@gmail.com>",
   "main": "index.js",
   "license": "GPL-3.0-or-later",
-  "keywords": ["material", "icons", "icon", "download", "get", "cli", "terminal"],
+  "keywords": [
+    "material",
+    "icons",
+    "icon",
+    "download",
+    "get",
+    "cli",
+    "terminal"
+  ],
   "homepage": "https://github.com/mjarkk/material-icons-cli",
   "bugs": "https://github.com/mjarkk/material-icons-cli/issues",
   "repository": {
