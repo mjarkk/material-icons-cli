@@ -1,5 +1,6 @@
 # Download material icons via the terminal
-*Download material icons via the terminal*
+*Download material icons via the terminal*  
+Install: `npm i -g material-icons-cli`
 
 ## How to:
 - Help: `micons --help`
