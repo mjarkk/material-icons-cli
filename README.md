@@ -2,7 +2,7 @@
 *Download material icons via the terminal*  
 Install: `npm i -g material-icons-cli`
 
-## How to:
+## Usage:
 - Help: `micons --help`
 - get svg icon: `micons get <icon>`
 - get svg icon inside a Vue component: `micons get <icon> --vue`

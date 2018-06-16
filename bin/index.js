@@ -139,7 +139,7 @@ let chooseIcon = (list, cb) =>
   })
 
 program
-  .version(fs.readJsonSync('./../package.json').version)
+  .version(fs.readJsonSync(path.resolve(__dirname, './../package.json')).version)
   .option('-s, --svg', 'save as .svg file (default)')
   .option('-v, --vue', 'save as vue component (.vue)')
   .option('-r, --react', 'save as react component (.js)')
