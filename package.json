@@ -1,8 +1,9 @@
 {
-  "name": "get-material-icons",
+  "name": "material-icons-cli",
+  "description": "Download material icons via the terminal",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "bin": {
     "micons": "./bin/index.js"
   },
