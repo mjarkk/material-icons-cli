@@ -52,26 +52,19 @@ let getIcon = icon => {
   let name = icon.easyName
   if (program.vue) {
     saveIcon(`<template>${svg}</template>`, name, 'vue')
-  } else if (program.react) {
+  } else if (program.react || program.reactJSX || program.preact) {
     saveIcon(`
-      import React, { Component } from 'react';
-      class I extends React.Component {
+      ${ program.preact
+        ? 'import { h, render, Component } from \'preact\''
+        : 'import React, { Component } from \'react\''
+      };
+      class I extends ${ program.preact ? 'Component' : 'React.Component' } {
         render() {
           return ${svg};
         }
       }
       export default I;
-    `, name, 'js')
-  } else if (program.reactJSX) {
-    saveIcon(`
-      import React, { Component } from 'react';
-      class I extends React.Component {
-        render() {
-          return ${svg};
-        }
-      }
-      export default I;
-    `, name, 'jsx')
+    `, name, program.reactJSX ? 'js' : 'jsx')
   } else if (program.litHTML) {
     saveIcon(`
       import {html} from 'lit-html';
@@ -144,17 +137,24 @@ program
   .option('-v, --vue', 'save as vue component (.vue)')
   .option('-r, --react', 'save as react component (.js)')
   .option('-x, --reactJSX', 'save as react component (.jsx)')
+  .option('-p, --preact', 'save as preact component (.js)')
   .option('-l, --litHTML', 'save as litHTML template (.js)')
   .command('get <type>')
   .alias('g')
   .description('download an icon') 
   .action((query, argv) => {
     let searchRes = serachIcon(query)
-    let askOptions = searchRes.map(e => `${e.easyName} -> ${e.group}`)
-    chooseIcon(askOptions, answer => {
-      getIcon(searchRes[askOptions.indexOf(answer)])
-    })
-  
+    if (searchRes.length == 0) {
+      log(colors.red.bold('no icons found, search for icons here: https://material.io/tools/icons/'))
+      process.exit()
+    } else if (searchRes.length == 1) {
+      getIcon(searchRes[0])
+    } else {
+      let askOptions = searchRes.map(e => `${e.easyName} -> ${e.group}`)
+      chooseIcon(askOptions, answer => {
+        getIcon(searchRes[askOptions.indexOf(answer)])
+      })
+    }
   })
 
 program.parse(process.argv)

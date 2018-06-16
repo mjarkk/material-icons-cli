@@ -11,7 +11,7 @@ $ npm i -g material-icons-cli
 ## Usage
 ```
 $ micons --help
-  
+
   Usage: micons [options] [command]
 
   Options:
@@ -21,6 +21,7 @@ $ micons --help
     -v, --vue       save as vue component (.vue)
     -r, --react     save as react component (.js)
     -x, --reactJSX  save as react component (.jsx)
+    -p, --preact    save as preact component (.js)
     -l, --litHTML   save as litHTML template (.js)
     -h, --help      output usage information
 
