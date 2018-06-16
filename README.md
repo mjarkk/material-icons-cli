@@ -1,5 +1,6 @@
-# material-icons-cli
-*Download material icons via the terminal*
+# material-icons-cli  
+*Download material icons via the terminal*  
+![Preview Image](preview/preview.gif?raw=true "Preview Image")  
 
 ## Install
 
