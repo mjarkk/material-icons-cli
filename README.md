@@ -30,11 +30,15 @@ $ micons --help
     get|g <type>    download an icon
 ```
 
-
 ## Devolopment
 - Clone repo
 - `$ npm i -g`
-- Have fun!
+
+## Testing
+- `npm i -g yarn ava`
+- `rm -rf node_modules`
+- `yarn`
+- `yarn test`
 
 ## License
 
