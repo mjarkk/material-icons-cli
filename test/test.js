@@ -2,12 +2,16 @@ import test from 'ava'
 import search from '../bin/search.js'
 import getIcon from '../bin/getIcon.js'
 import iconList from '../bin/iconList.js'
+import fs from 'fs-extra'
+import path from 'path'
+import ntml from 'lit-ntml'
 
+const html = ntml()
 let list = iconList()
 
-test('iconList is a function', t => {
+test('iconList is a function', t => 
   t.is(typeof iconList, 'function')
-})
+)
 
 test('icons list function return object', t => 
   typeof list == 'object'
@@ -213,4 +217,52 @@ test('getIcon returns valid data to save when using vue as flag', t => {
   } catch (err) {
     t.fail(err)
   }
+})
+
+test('React component works', t => {
+  t.log('!Can\'t test component fully because i can\'t require react components natively!')
+  t.plan(2)
+  getIcon(search('cast', list)[0], {react: true}, (toSave, name, ex) => {
+    let regex = /<div([a-z]| |=|"|'|<|>|:|\/|\.|[0-9]|-)+<\/div>/im.exec(toSave)[0]
+    t.true(regex != '' && regex != undefined)
+    t.regex(toSave, /import( {0,})React,( {0,}){( {0,})Component( {0,})}( {0,})from( {0,})'react'/)
+  })
+})
+
+test('preact component works', t => {
+  t.log('!Can\'t test component fully because i can\'t require preact components natively!')
+  t.plan(2)
+  getIcon(search('cast', list)[0], {preact: true}, (toSave, name, ex) => {
+    let regex = /<div([a-z]| |=|"|'|<|>|:|\/|\.|[0-9]|-)+<\/div>/im.exec(toSave)[0]
+    t.true(regex != '' && regex != undefined)
+    t.regex(toSave, /import( {0,}){( {0,})h( {0,}),( {0,})render( {0,}),( {0,})Component( {0,})}( {0,})from( {0,})'preact'/)
+  })
+})
+
+test('litHTML includes the right javascript code', t => {
+  t.plan(1)
+  getIcon(search('cast', list)[0], {litHTML: true}, (toSave, name, ex) => {
+    let regex = /import( {0,}){( {0,})html( {0,})}( {0,})from( {0,})'lit-html'( |\n|;)+export( {0,})default( {0,})\(( {0,})\)( {0,})=>( {0,})html`(.|\n)+`/im
+    t.regex(toSave, regex)
+  })
+})
+
+test('litHTML template works', t => {
+  t.plan(1)
+  getIcon(search('cast', list)[0], {litHTML: true}, (toSave, name, ex) => {
+    let regex = /<div([a-z]|[0-9]| |=|"|'|>|<|:|\/|\.|-|\n)+<\/div>/im.exec(toSave)[0]
+    let output = html`${regex}`
+    t.is(typeof output.then, 'function')
+  })
+})
+
+test.cb('litHTML template returns the right html', t => {
+  getIcon(search('cast', list)[0], {litHTML: true}, (toSave, name, ex) => {
+    let regex = /<div([a-z]|[0-9]| |=|"|'|>|<|:|\/|\.|-|\n)+<\/div>/im.exec(toSave)[0]
+    let output = html`${regex}`
+    output.then(htmlRender => {
+      t.regex(htmlRender, /<div class="icon"( {0,})>( {0,}|\n)+<svg(.|\n)+<\/svg>( |\n)+<\/div>/im)
+      t.end()
+    })
+  })
 })

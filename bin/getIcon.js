@@ -12,12 +12,7 @@ module.exports = (icon, program, saveIcon) => {
         ? 'import { h, render, Component } from \'preact\''
         : 'import React, { Component } from \'react\''
       };
-      class I extends ${ program.preact ? 'Component' : 'React.Component' } {
-        render() {
-          return ${svg};
-        }
-      }
-      export default I;
+      export default () => <div className="icon">${svg}</div>
     `, name, program.reactJSX ? 'js' : 'jsx')
   } else if (program.litHTML) {
     saveIcon(`
