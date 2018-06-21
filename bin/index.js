@@ -16,8 +16,13 @@ names = iconList()
 let saveIcon = (data, name, ex) => {
   let filePath = path.resolve(process.cwd(), `${ name.replace(/ /g, '-') }.${ ex }`)
   let save = () => {
-    fs.outputFileSync(filePath, data)
-    log('saved svg file')
+    if (program.log) {
+      let row = '---------------------'
+      log(`\n${row}\n${data}\n${row}\n`)
+    } else {
+      fs.outputFileSync(filePath, data)
+      log('saved svg file')
+    }
   }
 
   if (!fs.existsSync(filePath)) {
@@ -59,6 +64,7 @@ program
   .option('-x, --reactJSX', 'save as react component (.jsx)')
   .option('-p, --preact', 'save as preact component (.js)')
   .option('-l, --litHTML', 'save as litHTML template (.js)')
+  .option('-L, --log', 'Instead of saving the file it just logs the output')
   .command('get <type>')
   .alias('g')
   .description('download an icon') 

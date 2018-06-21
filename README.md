@@ -23,6 +23,7 @@ $ micons --help
     -x, --reactJSX  save as react component (.jsx)
     -p, --preact    save as preact component (.js)
     -l, --litHTML   save as litHTML template (.js)
+    -L, --log       Instead of saving the file it just logs the output
     -h, --help      output usage information
 
   Commands:
