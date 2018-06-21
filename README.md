@@ -29,6 +29,7 @@ $ micons --help
   Commands:
 
     get|g <type>    download an icon
+    *               download an icon
 ```
 
 ## Devolopment

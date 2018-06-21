@@ -56,6 +56,22 @@ let chooseIcon = (list, cb) =>
     }
   })
 
+// this is the callback from the `program`
+let start = query => {
+  let searchRes = serachIcon(query, names)
+  if (searchRes.length == 0) {
+    log(colors.red.bold('no icons found, search for icons here: https://material.io/tools/icons/'))
+    process.exit()
+  } else if (searchRes.length == 1) {
+    getIcon(searchRes[0], program, saveIcon)
+  } else {
+    let askOptions = searchRes.map(e => `${e.easyName} -> ${e.group}`)
+    chooseIcon(askOptions, answer => {
+      getIcon(searchRes[askOptions.indexOf(answer)], program, saveIcon)
+    })
+  }
+}
+
 program
   .version(fs.readJsonSync(path.resolve(__dirname, './../package.json')).version)
   .option('-s, --svg', 'save as .svg file (default)')
@@ -65,22 +81,16 @@ program
   .option('-p, --preact', 'save as preact component (.js)')
   .option('-l, --litHTML', 'save as litHTML template (.js)')
   .option('-L, --log', 'Instead of saving the file it just logs the output')
+
+program
   .command('get <type>')
   .alias('g')
   .description('download an icon') 
-  .action((query, argv) => {
-    let searchRes = serachIcon(query, names)
-    if (searchRes.length == 0) {
-      log(colors.red.bold('no icons found, search for icons here: https://material.io/tools/icons/'))
-      process.exit()
-    } else if (searchRes.length == 1) {
-      getIcon(searchRes[0], program, saveIcon)
-    } else {
-      let askOptions = searchRes.map(e => `${e.easyName} -> ${e.group}`)
-      chooseIcon(askOptions, answer => {
-        getIcon(searchRes[askOptions.indexOf(answer)], program, saveIcon)
-      })
-    }
-  })
+  .action(start)
+
+program
+  .command('*')
+  .description('download an icon')
+  .action(start)
 
 program.parse(process.argv)
